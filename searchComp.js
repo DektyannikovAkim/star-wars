@@ -13,6 +13,9 @@ const search = {
                         item.id = this.$parent.getIdFromUrl(item.url);
                         item.characterPhoto = 'https://starwars-visualguide.com/assets/img/characters/' + item.id + '.jpg';
                         item.favorite = this.$parent.favoritesHeroes.find(el => el.id === item.id);
+                        this.$parent.getJson(item.homeworld).then(data => {
+                            item.homeworld = data.name;
+                        });
                         this.$parent.heroes.push(item);
                     }
                 })

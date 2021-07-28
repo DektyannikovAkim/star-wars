@@ -3,7 +3,12 @@ const app = {
         return {
             API: "https://swapi.dev/api/people/?format=json",
             heroes: [],
-            favoritesHeroes: []
+            favoritesHeroes: [],
+            pagination: {
+                currentPage: 1,
+                nextPages: true,
+                previousPages: false
+            }
         }
     },
     components: {
@@ -11,7 +16,7 @@ const app = {
         'favorites-heroes': favoritesHeroes,
         'search': search,
         'sorter': sorter,
-        // 'categories': categories
+        'pagination': pagination
     },
     methods: {
         getJson(API) {
@@ -24,7 +29,9 @@ const app = {
         toggleFavorites(item) {
             let findItem = this.heroes.find(el => el.id === item.id);
             if (this.favoritesHeroes.find(el => el.id === item.id)) {
-                findItem.favorite = false;
+                if (findItem) {
+                    findItem.favorite = false;
+                }
                 this.favoritesHeroes = this.favoritesHeroes.filter(el => el.id !== item.id)
             } else {
                 findItem.favorite = true;
@@ -56,12 +63,38 @@ const app = {
         clearFavorites() {
             localStorage.clear();
             this.favoritesHeroes.length = 0;
+        },
+        setPage(p) {
+            this.heroes.length = 0;
+            this.getJson('https://swapi.dev/api/people/?page=' + p + '&format=json')
+                .then(data => {
+                    this.paginator(data, p)
+                    this.getHeroes(data.results);
+                });
+        },
+        paginator(data, currentPage) {
+            if (data.next && data.previous) {
+                this.pagination.nextPages = true;
+                this.pagination.previousPages = true;
+            } else if (data.next) {
+                this.pagination.nextPages = true;
+                this.pagination.previousPages = false;
+            } else {
+                this.pagination.nextPages = false;
+                this.pagination.previousPages = true;
+            }
+            this.pagination.currentPage = currentPage;
+        }
+    },
+    computed: {
+        collection() {
+            return this.paginate(this.heroes);
         }
     },
     mounted() {
         this.getJson(this.API)
             .then(data => {
-                this.getHeroes(data.results)
+                this.getHeroes(data.results);
                 console.log(this.heroes);
             });
         this.getfavoritesHeroes();

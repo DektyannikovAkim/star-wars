@@ -156,7 +156,7 @@ button {
 
 .heroes-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 260px);
+    grid-template-columns: repeat(auto-fit, 215px);
     grid-row-gap: 25px;
     justify-content: space-between;
     margin: 35px 0px;
@@ -167,11 +167,12 @@ button {
 }
 
 .heroes-item>img {
-    width: 260px;
+    width: 215px;
     height: 280px;
 }
 
 .item-info {
+    font-size: 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -197,6 +198,78 @@ button {
 
 .favorite {
     color: rgb(248, 1, 1);
+}
+
+.btn-toolbar {
+    margin-top: 15px;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    border-radius: 3px;
+    border: solid 1px #ebebeb;
+    background-color: #ffffff;
+}
+
+.scroll-button {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background-color: #d8d8d8;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.scroll-button::before {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 1px;
+    background-color: #ffffff;
+    top: 1px;
+    right: 18px;
+    bottom: 15px;
+    transform: rotate( 45deg);
+}
+
+.scroll-button::after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 1px;
+    background-color: #ffffff;
+    top: 14px;
+    right: 17px;
+    bottom: 1px;
+    transform: rotate( -45deg);
+}
+
+.scroll-button.right {
+    transform: rotate(180deg);
+}
+
+.current-page {
+    font-size: 20px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #c4c4c4;
+    margin: 0px 6.5px;
+    padding: 0px 11px;
+}
+
+.page_active {
+    background-color: #463b3b;
+    outline: 1px solid #000000;
 }
 
 .footer {
